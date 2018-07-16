@@ -1,0 +1,103 @@
+import React, { Component } from 'react';
+import { Layout, Row, Col, Menu } from 'antd';
+import PropTypes from 'prop-types';
+import BBS from './components/BBS';
+import Blog from './components/Blog';
+import Games from './components/Games';
+import Home from './components/Home';
+import Technology from './components/Technology';
+import './Door.less';
+const { Header, Content, Footer } = Layout;
+const MenuList = [
+	{ key: '1', name: '首页' },
+	{ key: '2', name: '技术栈' },
+	{ key: '3', name: '博客' },
+	{ key: '4', name: '游戏' },
+	{ key: '5', name: '论坛' },
+]
+class Door extends Component {
+	static propTypes = {
+		setContent: PropTypes.func,
+		doorReducer: PropTypes.object,
+	};
+	constructor(props) {
+		super(props);
+	}
+	handleContentTypes = (e) => {
+		const { setContent } = this.props;
+		setContent(e.key)
+	}
+	handleContent = (types) => {
+		switch (types) {
+			case '1':
+				return <Home />;
+			case '2':
+				return <Technology />;
+			case '3':
+				return <Blog />;
+			case '4':
+				return <Games />;
+			case '5':
+				return <BBS />;
+			default:
+				return <Home />;
+		}
+	}
+	render() {
+		const { doorReducer } = this.props;
+		const { contentTypes } = doorReducer;
+		const types = contentTypes ? contentTypes : '1';
+
+		return (
+			<div className="g-door">
+				<Layout>
+					<Header className="g-door-header">
+						<Row type="flex" justify="center">
+							<Col span={16}>
+								<Menu
+									theme="light"
+									mode="horizontal"
+									defaultSelectedKeys={['1']}
+									className="g-door-nav"
+									onClick={this.handleContentTypes}
+								>
+									{
+										MenuList.map(
+											it =>
+												<Menu.Item key={it.key} >{it.name}</Menu.Item>
+										)
+									}
+								</Menu>
+							</Col>
+						</Row>
+					</Header>
+					<Content className="g-door-content">
+						<Row>
+							<Col xs={0} sm={0} md={0} lg={4} xl={4} xxl={3}>
+								<div className="g-door-sider">
+									侧边
+									</div>
+							</Col>
+							<Col xs={24} sm={24} md={24} lg={16} xl={16} xxl={18}>
+								<div className="g-door-center">
+									{
+										this.handleContent(types)
+									}
+								</div>
+							</Col>
+							<Col xs={0} sm={0} md={0} lg={4} xl={4} xxl={3}>
+								<div className="g-door-sider">
+								</div>
+							</Col>
+						</Row>
+					</Content>
+					<Footer className="g-door-footer">
+						create by octopusccc1@github
+					</Footer>
+				</Layout>
+			</div>
+		)
+	}
+}
+
+export default Door;
