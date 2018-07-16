@@ -47,7 +47,6 @@ class Door extends Component {
 		const { doorReducer } = this.props;
 		const { contentTypes } = doorReducer;
 		const types = contentTypes ? contentTypes : '1';
-
 		return (
 			<div className="g-door">
 				<Layout>
