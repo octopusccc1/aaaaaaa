@@ -2,11 +2,14 @@ import React, { Component } from 'react';
 import { Layout, Row, Col, Menu } from 'antd';
 import PropTypes from 'prop-types';
 import BBS from './components/BBS';
-import Blog from './components/Blog';
+import Blog from './components/Blog/';
 import Games from './components/Games';
 import Home from './components/Home';
-import Technology from './components/Technology';
+import Technology from './components/Technology/';
+import '../../assets/common/mixin.less';
 import './Door.less';
+import { context } from '../../utils/context';
+const requireContext = context();
 const { Header, Content, Footer } = Layout;
 const MenuList = [
 	{ key: '1', name: '首页' },
@@ -28,27 +31,32 @@ class Door extends Component {
 		setContent(e.key)
 	}
 	handleContent = (types) => {
+		const { setContent } = this.props;
 		switch (types) {
 			case '1':
 				return <Home />;
 			case '2':
-				return <Technology />;
+				return <Technology setContent={setContent} />;
 			case '3':
 				return <Blog />;
 			case '4':
 				return <Games />;
 			case '5':
 				return <BBS />;
-			default:
-				return <Home />;
+			default: {
+				const Types = requireContext(`./${types}/index.js`).default;
+				return <Types />;
+			}
 		}
 	}
 	render() {
-		const { doorReducer } = this.props;
+		const { doorReducer, routing } = this.props;
 		const { contentTypes } = doorReducer;
+		const { pathname } = routing.locationBeforeTransitions;
 		const types = contentTypes ? contentTypes : '1';
+		const isRoute = pathname.replace(/\/door\//, '');
 		return (
-			<div className="g-door">
+			<div className="g-door" >
 				<Layout>
 					<Header className="g-door-header">
 						<Row type="flex" justify="center">
@@ -64,8 +72,7 @@ class Door extends Component {
 										MenuList.map(
 											it =>
 												<Menu.Item key={it.key} >{it.name}</Menu.Item>
-										)
-									}
+										)}
 								</Menu>
 							</Col>
 						</Row>
@@ -80,7 +87,7 @@ class Door extends Component {
 							<Col xs={24} sm={24} md={24} lg={16} xl={16} xxl={18}>
 								<div className="g-door-center">
 									{
-										this.handleContent(types)
+										isRoute ? this.props.children : this.handleContent(types)
 									}
 								</div>
 							</Col>

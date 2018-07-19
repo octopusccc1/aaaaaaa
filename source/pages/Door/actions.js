@@ -1,5 +1,6 @@
 import {
-    SET_CONTENT
+    SET_CONTENT,
+    SET_SHIFT_TYPE,
 } from './actionTypes';
 
 export const setContent = (key)=>{
@@ -8,3 +9,16 @@ export const setContent = (key)=>{
         key
     }
 }
+
+
+
+
+/***********************demo action***************************************************************/
+export const setShiftType = (shiftType) => {
+    return {
+        type:SET_SHIFT_TYPE,
+        shiftType
+    }
+}
+
+
