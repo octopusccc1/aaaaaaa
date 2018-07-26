@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Col } from 'antd';
 import { request } from '../../../../utils/ajax';
-import BlogItem from './components/BlogItem';
+import BlogItem from './components/BlogItem/';
 import './Blog.less';
 import '../../../../../mock';
 const mock = [
@@ -19,7 +19,7 @@ class Blog extends Component {
 	}
 	componentWillMount() {
 		request({
-			url: '/news/index',
+			url: '/news/index2',
 			method: 'get',
 		}).then(
 			it => {

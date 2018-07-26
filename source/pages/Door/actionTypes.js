@@ -1,5 +1,3 @@
-export const SET_CONTENT = 'door/setContent';
-
 
 
 

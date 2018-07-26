@@ -1,22 +1,16 @@
 import React, { Component } from 'react';
 import { Layout, Row, Col, Menu } from 'antd';
+import { browserHistory } from 'react-router';
 import PropTypes from 'prop-types';
-import BBS from './components/BBS';
-import Blog from './components/Blog/';
-import Games from './components/Games';
-import Home from './components/Home';
-import Technology from './components/Technology/';
 import '../../assets/common/mixin.less';
 import './Door.less';
-import { context } from '../../utils/context';
-const requireContext = context();
 const { Header, Content, Footer } = Layout;
 const MenuList = [
-	{ key: '1', name: '首页' },
-	{ key: '2', name: '技术栈' },
-	{ key: '3', name: '博客' },
-	{ key: '4', name: '游戏' },
-	{ key: '5', name: '论坛' },
+	{ name: '首页', url: '/door/home/' },
+	{ name: '技术栈', url: '/door/technology/' },
+	{ name: '博客', url: '/door/blog/' },
+	{ name: '游戏', url: '/door/games/' },
+	{ name: '论坛', url: '/door/BBS/' },
 ]
 class Door extends Component {
 	static propTypes = {
@@ -27,34 +21,24 @@ class Door extends Component {
 		super(props);
 	}
 	handleContentTypes = (e) => {
-		const { setContent } = this.props;
-		setContent(e.key)
-	}
-	handleContent = (types) => {
-		const { setContent } = this.props;
-		switch (types) {
-			case '1':
-				return <Home />;
-			case '2':
-				return <Technology setContent={setContent} />;
-			case '3':
-				return <Blog />;
-			case '4':
-				return <Games />;
-			case '5':
-				return <BBS />;
-			default: {
-				const Types = requireContext(`./${types}/index.js`).default;
-				return <Types />;
-			}
-		}
+		browserHistory.push(e.key);
 	}
 	render() {
-		const { doorReducer, routing } = this.props;
-		const { contentTypes } = doorReducer;
+		const { routing } = this.props;
 		const { pathname } = routing.locationBeforeTransitions;
-		const types = contentTypes ? contentTypes : '1';
-		const isRoute = pathname.replace(/\/door\//, '');
+		let surePathname;
+		//是否是blogPage页，指向blog
+		if (/^\/door\/blogPage\//.test(pathname)) {
+			surePathname = MenuList[2].url
+		//是否是door页，指向home
+		} else if (/^\/door\/$/.test(pathname)) {
+			surePathname = MenuList[0].url
+		//是否是demo页，指向技术栈
+		} else if (pathname === MenuList[1].url || pathname.indexOf('Demo') === 6) {
+			surePathname = MenuList[1].url
+		} else {
+			surePathname = pathname
+		}
 		return (
 			<div className="g-door" >
 				<Layout>
@@ -64,14 +48,14 @@ class Door extends Component {
 								<Menu
 									theme="light"
 									mode="horizontal"
-									defaultSelectedKeys={['1']}
+									defaultSelectedKeys={[surePathname]}
 									className="g-door-nav"
 									onClick={this.handleContentTypes}
 								>
 									{
 										MenuList.map(
 											it =>
-												<Menu.Item key={it.key} >{it.name}</Menu.Item>
+												<Menu.Item key={it.url} >{it.name}</Menu.Item>
 										)}
 								</Menu>
 							</Col>
@@ -86,9 +70,7 @@ class Door extends Component {
 							</Col>
 							<Col xs={24} sm={24} md={24} lg={16} xl={16} xxl={18}>
 								<div className="g-door-center">
-									{
-										isRoute ? this.props.children : this.handleContent(types)
-									}
+									{this.props.children}
 								</div>
 							</Col>
 							<Col xs={0} sm={0} md={0} lg={4} xl={4} xxl={3}>

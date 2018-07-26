@@ -94,11 +94,17 @@ module.exports = {
     strictExportPresence: true,
     rules: [
       {
+        test: /\.md$/,
+        use: [{
+          loader: 'raw-loader'
+        }]
+      },
+      {
         test: /\.js?$/,
         exclude: /node_modules/,
         loader: 'babel-loader',
         query: {
-          presets: ['es2015', 'react',"stage-1","stage-2",],
+          presets: ['es2015', 'react', "stage-1", "stage-2",],
         }
       },
       {
@@ -106,9 +112,9 @@ module.exports = {
         include: paths.appSrc,
         loader: 'babel',
         query: {
-        plugins: [
-          ['import', [{ libraryName: "antd", style: 'css' }]],
-        ],
+          plugins: [
+            ['import', [{ libraryName: "antd", style: 'css' }]],
+          ],
           // This is a feature of `babel-loader` for webpack (not Babel itself).
           // It enables caching results in ./node_modules/.cache/babel-loader/
           // directory for faster rebuilds.
@@ -164,7 +170,7 @@ module.exports = {
         ],
         include: paths.appSource,
       },
-     
+
       {
         // "oneOf" will traverse all following loaders until one will
         // match the requirements. When no loader matches it will fall
@@ -241,12 +247,13 @@ module.exports = {
             // its runtime that would otherwise processed through "file" loader.
             // Also exclude `html` and `json` extensions so they get processed
             // by webpacks internal loaders.
-            exclude: [/\.(js|jsx|mjs)$/, /\.(css|less)$/, /\.html$/, /\.json$/],
+            exclude: [/\.(js|jsx|mjs)$/, /\.(css|less)$/, /\.html$/,/\.md$/, /\.json$/],
             loader: require.resolve('file-loader'),
             options: {
               name: 'static/media/[name].[hash:8].[ext]',
             },
           },
+
         ],
       },
       // ** STOP ** Are you adding a new loader?

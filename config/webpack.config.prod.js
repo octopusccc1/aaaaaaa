@@ -212,6 +212,7 @@ module.exports = {
               compact: true,
             },
           },
+          
           // The notation here is somewhat confusing.
           // "postcss" loader applies autoprefixer to our CSS.
           // "css" loader resolves paths in CSS and adds assets as dependencies.
@@ -285,6 +286,12 @@ module.exports = {
             options: {
               name: 'static/media/[name].[hash:8].[ext]',
             },
+          },
+          {
+            test: /\.md$/,
+            use: [{
+              loader: 'raw-loader'
+            }]
           },
           // ** STOP ** Are you adding a new loader?
           // Make sure to add the new loader(s) before the "file" loader.

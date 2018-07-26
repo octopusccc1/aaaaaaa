@@ -17,9 +17,9 @@ class TestItem extends Component {
       this.setState({
         txtSet: true
       });
-      setAllClickType(false)
+      setAllClickType(false);
     }else {
-      setAllClickType(true)
+      setAllClickType(true);
     }
   }
   handleEnter = () => {
