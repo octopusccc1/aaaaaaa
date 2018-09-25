@@ -3,7 +3,7 @@ import { Route, IndexRoute } from 'react-router';
 import Door from './view';
 import BBS from './components/BBS';
 import Blog from './components/Blog/';
-import Games from './components/Games';
+import Games from './components/Games/';
 import Home from './components/Home';
 import Technology from './components/Technology/';
 import Ceshi from './components/Blog/demo/'
