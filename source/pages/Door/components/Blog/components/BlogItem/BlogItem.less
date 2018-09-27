@@ -112,10 +112,20 @@
     animation: overAmn 0.75s;
     transform: rotateY(14deg) rotateX(-6deg);
   }
+  ul.noactive {
+    animation: evenAmn 0.75s;
+    transform: rotateY(0deg) rotateX(0deg);
+  }
 }
 
 @keyframes overAmn
 {
 from {transform: rotateY(0deg) rotateX(0deg);}
 to {transform: rotateY(14deg) rotateX(-6deg);}
+}
+
+@keyframes evenAmn
+{
+from {transform: rotateY(14deg) rotateX(-6deg);}
+to {transform: rotateY(0deg) rotateX(0deg);}
 }

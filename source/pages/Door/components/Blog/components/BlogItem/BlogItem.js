@@ -12,7 +12,7 @@ class BlogItem extends Component {
 	}
 	handleOver = () => {
 		this.setState({
-			anm: true
+			anm: !this.state.anm
 		})
 	}
 	handleOut = () => {
@@ -35,20 +35,21 @@ class BlogItem extends Component {
 		const { imgList } = mock;
 		const { anm, text } = this.state;
 		const activeClass = classNames({
-			'active': anm
+			'active': anm,
+			'noactive':!anm
 		})
 		const textClass = classNames({
 			'activeDescribe': text
 		})
 		return (
 			<div className="g-blog-item">
-				<ul className={activeClass}>
+				<ul className={activeClass} onClick={this.handleOver}>
 					<li></li>
 					<li></li>
 					<li></li>
 					<li></li>
 					<li></li>
-					<li onMouseOver={this.handleOver} onMouseOut={this.handleOut}>
+					<li >
 						<Tooltip placement="top" title={mock.title}>
 							<div className="m-core">
 								<div className="m-title">{mock.title}</div>
