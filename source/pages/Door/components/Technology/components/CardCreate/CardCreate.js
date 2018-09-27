@@ -9,8 +9,8 @@ class CardCreate extends Component {
   render(){
     return(
       <div>
-        <Card title="举个🌰" bordered={false} className="u-card">
-        {this.props.children}
+        <Card title={this.props.title} bordered={false} className="u-card">
+          {this.props.children}
         </Card>
       </div>
     )

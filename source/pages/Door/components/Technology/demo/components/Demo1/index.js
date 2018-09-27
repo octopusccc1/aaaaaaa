@@ -1,2 +1,5 @@
 import Demo1 from './view';
-export default Demo1;
+export default {
+  component:Demo1,
+  name:'我是demo1'
+};

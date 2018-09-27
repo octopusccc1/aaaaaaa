@@ -15,14 +15,13 @@ export default (
 		<IndexRoute component={Home} />
 		<Route path="BBS/" component={BBS}></Route>
 		<Route path="blog/" component={Blog}>
-			
 		</Route>
 		<Route path="games/" component={Games}></Route>
 		<Route path="home/" component={Home}></Route>
 		<Route path="technology/" component={Technology}>
 		</Route>
 		{
-			requireMock.map((it, i) => <Route path={`${it}/`} key={i} component={requireContext(`./${it}/index.js`).default} />)
+			requireMock.map((it, i) => <Route path={`${it}/`} key={i} component={requireContext(`./${it}/index.js`).default.component} />)
 		}
 		<Route path="blogPage/:demo" component={Ceshi}/>
 	</Route>

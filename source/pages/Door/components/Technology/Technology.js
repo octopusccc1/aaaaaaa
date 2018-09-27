@@ -7,6 +7,7 @@ import { context } from '../../../../utils/context';
 const requireContext = context();
 let mapMock = requireContext.keys().map(it => it.replace(/\.\/|\/index\.js/g, ''));
 //3个为一组
+console.log()
 const groupNew = (arr) => {
 	let groupArr = [];
 	for (let i = 0, len = arr.length; i < len; i += 3) {
@@ -18,7 +19,6 @@ let newMapMock = groupNew(mapMock);
 class Technology extends Component {
 	constructor(props) {
 		super(props);
-		this.components = new Map;
 	}
 	handleDemo = (r) => {
 		browserHistory.push(`/door/${r}/`);
@@ -28,16 +28,17 @@ class Technology extends Component {
 			<div>
 				<div style={{ padding: '30px' }}>
 					{
-						newMapMock.map((it, i) => <Row gutter={16} key={i}>
-							{
-								it.map((r, index) =>
-									<Col span={8} key={index} onClick={this.handleDemo.bind(this, r)}>
-										<CardCreate>
-											{r}
-										</CardCreate>
-									</Col>)
-							}
-						</Row>)
+						newMapMock.map((it, i) =>
+							<Row gutter={16} key={i}>
+								{
+									it.map((r, index) =>
+										<Col span={8} key={index} onClick={this.handleDemo.bind(this, r)}>
+											<CardCreate title={requireContext(`./${r}/index.js`).default.name}>
+												{r}
+											</CardCreate>
+										</Col>)
+								}
+							</Row>)
 					}
 				</div>
 			</div>
